@@ -1,4 +1,5 @@
 services:
+  # Need a webservice purely for the demo to be able to scale
   - type: web
     name: demo-service-to-scale
     repo: https://github.com/johnbeynonorg/render-tiny-ruby-app
@@ -18,4 +19,15 @@ services:
         sync: false
       - key: SERVICE_ID_TO_SCALE
         sync: false
-  -
+
+  - type: cron
+    name: scale-down
+    runtime: ruby
+    schedule: "0 17 * * *"
+    buildCommand: "true" # ensure it's a string
+    startCommand: ./scale-down.sh
+    envVars: 
+      - key: RENDER_API_KEY
+        sync: false
+      - key: SERVICE_ID_TO_SCALE
+        sync: false
