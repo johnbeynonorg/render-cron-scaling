@@ -12,7 +12,7 @@ services:
     runtime: ruby
     schedule: "0 9 * * *"
     buildCommand: "true" # ensure it's a string
-    startCommand: ./scale-up
+    startCommand: ./scale-up.sh
     envVars: 
       - key: RENDER_API_KEY
         sync: false
