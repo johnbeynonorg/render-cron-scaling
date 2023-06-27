@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: demo-service-to-scale
+    repo: https://github.com/johnbeynonorg/render-tiny-ruby-app
+    runtime: ruby
+    plan: starter
+    buildCommand: ./render-build.sh
+    startCommand: ./render-start.sh
+
+  - type: cron
+    name: scale-up
+    runtime: ruby
+    schedule: "0 9 * * *"
+    buildCommand: "true" # ensure it's a string
+    startCommand: ./scale-up
+    envVars: 
+      - key: RENDER_API_KEY
+        sync: false
+      - key: SERVICE_ID_TO_SCALE
+        sync: false
+  -
